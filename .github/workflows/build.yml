@@ -10,7 +10,6 @@ on:
 
 env:
   DOTNET_VERSION: '7.0.x'
-  FFMPEG_VERSION: '6.1'
 
 jobs:
   build:
@@ -28,7 +27,10 @@ jobs:
     - name: Setup FFmpeg
       uses: FedericoCarboni/setup-ffmpeg@v3
       with:
-        version: ${{ env.FFMPEG_VERSION }}
+        ffmpeg-version: release
+        architecture: ''
+        linking-type: static
+        github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
         
     - name: Restore dependencies
       run: dotnet restore src/SimpleVideoCutter/SimpleVideoCutter.csproj
@@ -41,11 +43,6 @@ jobs:
       
     - name: Publish
       run: dotnet publish src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --output ./publish --no-build --self-contained false
-      
-    - name: Copy FFmpeg
-      run: |
-        copy "C:\ffmpeg\bin\ffmpeg.exe" "publish\ffmpeg.exe"
-        copy "C:\ffmpeg\bin\ffprobe.exe" "publish\ffprobe.exe"
         
     - name: Create release package
       run: |

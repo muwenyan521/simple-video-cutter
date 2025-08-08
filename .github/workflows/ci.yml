@@ -30,7 +30,10 @@ jobs:
     - name: Setup FFmpeg
       uses: FedericoCarboni/setup-ffmpeg@v3
       with:
-        version: '6.1'
+        ffmpeg-version: release
+        architecture: ''
+        linking-type: static
+        github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
         
     - name: Restore dependencies
       run: dotnet restore src/SimpleVideoCutter/SimpleVideoCutter.csproj
