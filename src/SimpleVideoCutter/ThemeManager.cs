@@ -1,9 +1,11 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.Versioning;
 
 namespace SimpleVideoCutter
 {
+    [SupportedOSPlatform("windows")]
     public static class ThemeManager
     {
         public static class Colors
@@ -262,6 +264,7 @@ namespace SimpleVideoCutter
     }
 
     // 自定义ToolStrip渲染器
+    [SupportedOSPlatform("windows")]
     public class CustomToolStripRenderer : ToolStripProfessionalRenderer
     {
         private readonly dynamic colors;
@@ -293,6 +296,7 @@ namespace SimpleVideoCutter
     }
 
     // 自定义MenuStrip渲染器
+    [SupportedOSPlatform("windows")]
     public class CustomMenuStripRenderer : ToolStripProfessionalRenderer
     {
         private readonly dynamic colors;

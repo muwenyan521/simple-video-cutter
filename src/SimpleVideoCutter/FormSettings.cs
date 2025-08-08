@@ -11,9 +11,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.Versioning;
 
 namespace SimpleVideoCutter
 {
+    [SupportedOSPlatform("windows")]
     public partial class FormSettings : Form
     {
         private MainForm? mainForm;
@@ -109,7 +111,10 @@ namespace SimpleVideoCutter
             else
             {
                 // 如果用户确认了设置，通知主窗体刷新主题
-                mainForm?.RefreshTheme();
+                if (OperatingSystem.IsWindows())
+                {
+                    mainForm?.RefreshTheme();
+                }
             }
         }
 
