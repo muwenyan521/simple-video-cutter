@@ -134,11 +134,11 @@ namespace SimpleVideoCutter
                 case MenuStrip menuStrip:
                     ApplyMenuStripTheme(menuStrip, colors);
                     break;
-                case ToolStrip toolStrip:
-                    ApplyToolStripTheme(toolStrip, colors);
-                    break;
                 case StatusStrip statusStrip:
                     ApplyStatusStripTheme(statusStrip, colors);
+                    break;
+                case ToolStrip toolStrip:
+                    ApplyToolStripTheme(toolStrip, colors);
                     break;
                 case GroupBox groupBox:
                     ApplyGroupBoxTheme(groupBox, colors);
