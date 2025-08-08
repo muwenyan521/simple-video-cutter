@@ -1,0 +1,143 @@
+name: Release
+
+on:
+  release:
+    types: [ published ]
+
+env:
+  DOTNET_VERSION: '7.0.x'
+  FFMPEG_VERSION: '6.1'
+
+jobs:
+  build-and-package:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Setup FFmpeg
+      uses: FedericoCarboni/setup-ffmpeg@v4
+      with:
+        version: ${{ env.FFMPEG_VERSION }}
+        
+    - name: Restore dependencies
+      run: dotnet restore src/SimpleVideoCutter/SimpleVideoCutter.csproj
+      
+    - name: Build Release
+      run: dotnet build src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --no-restore
+      
+    - name: Publish x64
+      run: dotnet publish src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --output ./publish-x64 --no-build --self-contained false --runtime win-x64
+      
+    - name: Publish x86
+      run: dotnet publish src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --output ./publish-x86 --no-build --self-contained false --runtime win-x86
+      
+    - name: Copy FFmpeg x64
+      run: |
+        copy "C:\ffmpeg\bin\ffmpeg.exe" "publish-x64\ffmpeg.exe"
+        copy "C:\ffmpeg\bin\ffprobe.exe" "publish-x64\ffprobe.exe"
+        
+    - name: Copy FFmpeg x86
+      run: |
+        copy "C:\ffmpeg\bin\ffmpeg.exe" "publish-x86\ffmpeg.exe"
+        copy "C:\ffmpeg\bin\ffprobe.exe" "publish-x86\ffprobe.exe"
+        
+    - name: Copy README and License
+      run: |
+        copy "README.md" "publish-x64\README.md"
+        copy "LICENSE" "publish-x64\LICENSE"
+        copy "README.md" "publish-x86\README.md"
+        copy "LICENSE" "publish-x86\LICENSE"
+        
+    - name: Create x64 package
+      run: |
+        7z a -tzip SimpleVideoCutter-x64-${{ github.event.release.tag_name }}.zip ./publish-x64/*
+        
+    - name: Create x86 package
+      run: |
+        7z a -tzip SimpleVideoCutter-x86-${{ github.event.release.tag_name }}.zip ./publish-x86/*
+        
+    - name: Upload x64 artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: SimpleVideoCutter-x64-${{ github.event.release.tag_name }}
+        path: SimpleVideoCutter-x64-${{ github.event.release.tag_name }}.zip
+        
+    - name: Upload x86 artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: SimpleVideoCutter-x86-${{ github.event.release.tag_name }}
+        path: SimpleVideoCutter-x86-${{ github.event.release.tag_name }}.zip
+        
+  create-release:
+    needs: build-and-package
+    runs-on: windows-latest
+    
+    steps:
+    - name: Download x64 artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: SimpleVideoCutter-x64-${{ github.event.release.tag_name }}
+        path: ./artifacts-x64
+        
+    - name: Download x86 artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: SimpleVideoCutter-x86-${{ github.event.release.tag_name }}
+        path: ./artifacts-x86
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          ./artifacts-x64/*.zip
+          ./artifacts-x86/*.zip
+        tag_name: v${{ github.event.release.tag_name }}
+        name: Release ${{ github.event.release.tag_name }}
+        body: |
+          ## Simple Video Cutter ${{ github.event.release.tag_name }}
+          
+          ### Changes in this release:
+          ${{ github.event.release.body }}
+          
+          ### Downloads:
+          - **Windows x64**: SimpleVideoCutter-x64-${{ github.event.release.tag_name }}.zip
+          - **Windows x86**: SimpleVideoCutter-x86-${{ github.event.release.tag_name }}.zip
+          
+          ### Installation:
+          1. Download the appropriate version for your system (x64 or x86)
+          2. Extract the zip file
+          3. Run SimpleVideoCutter.exe
+          4. FFmpeg is included in the package
+          
+          ### System Requirements:
+          - Windows 10 or later
+          - .NET 7.0 Runtime (included in package)
+          - FFmpeg (included in package)
+          
+          ### Features:
+          - 🎬 Video cutting and editing
+          - 🎨 Dark mode theme support
+          - 🌍 Multi-language support
+          - 📁 Multiple format support (MP4, AVI, MKV, etc.)
+          - ⚡ Fast and efficient processing
+          - 🎯 Keyframe-based cutting
+          
+          ### What's New:
+          - ✨ Added dark mode theme support
+          - 🎨 Improved UI with modern design
+          - 🌙 System theme detection
+          - 🔧 Enhanced settings interface
+          
+          ### Bug Fixes:
+          - Various UI improvements
+          - Better theme switching
+          - Enhanced user experience
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

@@ -1,0 +1,79 @@
+name: Dependencies
+
+on:
+  schedule:
+    # Run every Monday at 9:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '7.0.x'
+        
+    - name: Check for outdated packages
+      run: |
+        dotnet list package --outdated --format json > outdated-packages.json
+        if [ -s outdated-packages.json ]; then
+          echo "Outdated packages found:"
+          cat outdated-packages.json
+          exit 1
+        else
+          echo "All packages are up to date"
+        fi
+        
+    - name: Check for vulnerable packages
+      run: |
+        dotnet list package --vulnerable --format json > vulnerable-packages.json
+        if [ -s vulnerable-packages.json ]; then
+          echo "Vulnerable packages found:"
+          cat vulnerable-packages.json
+          exit 1
+        else
+          echo "No vulnerable packages found"
+        fi
+        
+  update-dependencies:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '7.0.x'
+        
+    - name: Update packages
+      run: |
+        dotnet add package Newtonsoft.Json --version latest
+        dotnet add package LibVLCSharp --version latest
+        dotnet add package FFmpeg.NET --version latest
+        
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore: update dependencies'
+        title: 'chore: update dependencies'
+        body: |
+          ## Dependency Updates
+          
+          This PR updates the following dependencies:
+          - Newtonsoft.Json
+          - LibVLCSharp
+          - FFmpeg.NET
+          
+          Please review the changes and test thoroughly before merging.
+        branch: update-dependencies
+        delete-branch: true 

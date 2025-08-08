@@ -138,7 +138,10 @@ de los archivos de video que se considerarán. Importante cuando
 navegando al archivo de video anterior/siguiente en el directorio.</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Ampliaciones de archivos de vídeo:</value>
+    <value>Formatos de archivo compatibles</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Tema:</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Cancelar</value>

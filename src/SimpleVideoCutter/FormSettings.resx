@@ -121,11 +121,10 @@
   <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Right</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>65, 8</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
   </data>
@@ -580,7 +579,7 @@ navigating to previous/next video file in directory.</value>
     <value>Preview size:</value>
   </data>
   <data name="label6.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;label6.Name" xml:space="preserve">
     <value>label6</value>
@@ -592,7 +591,76 @@ navigating to previous/next video file in directory.</value>
     <value>tableLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>0</value>
+  </data>
+  <data name="label7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right, Top</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 224</value>
+  </data>
+  <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 23</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Theme:</value>
+  </data>
+  <data name="label7.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="comboBoxThemeMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right, Top</value>
+  </data>
+  <data name="comboBoxThemeMode.DropDownStyle" type="System.Windows.Forms.ComboBoxStyle, System.Windows.Forms">
+    <value>DropDownList</value>
+  </data>
+  <data name="comboBoxThemeMode.FormattingEnabled" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="comboBoxThemeMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>208, 224</value>
+  </data>
+  <data name="comboBoxThemeMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="comboBoxThemeMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>528, 23</value>
+  </data>
+  <data name="comboBoxThemeMode.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;comboBoxThemeMode.Name" xml:space="preserve">
+    <value>comboBoxThemeMode</value>
+  </data>
+  <data name="&gt;&gt;comboBoxThemeMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxThemeMode.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;comboBoxThemeMode.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="comboBoxPreviewSize.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
@@ -631,7 +699,7 @@ navigating to previous/next video file in directory.</value>
     <value>6, 6, 6, 6</value>
   </data>
   <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>740, 201</value>
@@ -652,7 +720,7 @@ navigating to previous/next video file in directory.</value>
     <value>1</value>
   </data>
   <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="comboBoxOutputDirectory" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxVideoFileExtensions" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonFFmpegPath" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonDefaultDirectory" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonOutputDirectory" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="textBoxFFmpegPath" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBoxDefaultDirectory" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxOutputFilePattern" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBoxPreviewSize" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="comboBoxOutputDirectory" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxVideoFileExtensions" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonFFmpegPath" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonDefaultDirectory" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonOutputDirectory" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="textBoxFFmpegPath" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBoxDefaultDirectory" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxOutputFilePattern" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBoxPreviewSize" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBoxThemeMode" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="flowLayoutPanel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -718,7 +786,7 @@ navigating to previous/next video file in directory.</value>
     <value>RightToLeft</value>
   </data>
   <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 300</value>
+    <value>0, 340</value>
   </data>
   <data name="flowLayoutPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -751,7 +819,7 @@ navigating to previous/next video file in directory.</value>
     <value>7, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>740, 346</value>
+    <value>740, 386</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>

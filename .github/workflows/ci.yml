@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  DOTNET_VERSION: '7.0.x'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+        platform: [x64, x86]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Setup FFmpeg
+      uses: FedericoCarboni/setup-ffmpeg@v4
+      with:
+        version: '6.1'
+        
+    - name: Restore dependencies
+      run: dotnet restore src/SimpleVideoCutter/SimpleVideoCutter.csproj
+      
+    - name: Build
+      run: dotnet build src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration ${{ matrix.configuration }} --platform ${{ matrix.platform }} --no-restore
+      
+    - name: Run code analysis
+      if: matrix.configuration == 'Release'
+      run: dotnet build src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --no-restore --verbosity normal
+      
+    - name: Check for warnings
+      if: matrix.configuration == 'Release'
+      run: |
+        $buildOutput = dotnet build src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --no-restore --verbosity normal 2>&1
+        if ($buildOutput -match "warning") {
+          Write-Host "Build warnings found:"
+          Write-Host $buildOutput
+          exit 1
+        }
+        
+  test:
+    runs-on: windows-latest
+    needs: build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Restore dependencies
+      run: dotnet restore src/SimpleVideoCutter/SimpleVideoCutter.csproj
+      
+    - name: Run tests
+      run: dotnet test src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./TestResults/**/coverage.cobertura.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        
+  security:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Run security scan
+      run: dotnet list package --vulnerable
+      
+    - name: Check for known vulnerabilities
+      run: |
+        $vulnerable = dotnet list package --vulnerable
+        if ($vulnerable -match "vulnerable") {
+          Write-Host "Vulnerable packages found:"
+          Write-Host $vulnerable
+          exit 1
+        }
+        
+  lint:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Install StyleCop
+      run: dotnet tool install --global StyleCop.Analyzers
+      
+    - name: Run StyleCop analysis
+      run: dotnet build src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --verbosity normal 

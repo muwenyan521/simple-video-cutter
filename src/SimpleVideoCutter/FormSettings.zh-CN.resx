@@ -140,6 +140,9 @@
   <data name="label5.Text" xml:space="preserve">
     <value>支持的文件格式</value>
   </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>主题:</value>
+  </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>取消</value>
   </data>

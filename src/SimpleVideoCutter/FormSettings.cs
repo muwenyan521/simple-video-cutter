@@ -16,6 +16,8 @@ namespace SimpleVideoCutter
 {
     public partial class FormSettings : Form
     {
+        private MainForm? mainForm;
+
         public FormSettings()
         {
             InitializeComponent();
@@ -51,13 +53,64 @@ namespace SimpleVideoCutter
                     Title = ps.ToString()
                 }).ToList();
 
+            // 初始化主题选择下拉框
+            this.comboBoxThemeMode.DataSource =
+                ((ThemeMode[])Enum.GetValues(typeof(ThemeMode))).Select(tm => new ComboBoxItem<ThemeMode>()
+                {
+                    Value = tm,
+                    Title = GetThemeModeDisplayName(tm)
+                }).ToList();
+
+            // 添加主题变更事件
+            this.comboBoxThemeMode.SelectedIndexChanged += ComboBoxThemeMode_SelectedIndexChanged;
+
         }
 
-        public void ShowSettingsDialog()
+        private void ComboBoxThemeMode_SelectedIndexChanged(object? sender, EventArgs e)
         {
+            if (comboBoxThemeMode.SelectedValue is ThemeMode selectedTheme)
+            {
+                // 实时预览主题
+                ThemeManager.ApplyTheme(this, selectedTheme);
+            }
+        }
+
+        private string GetThemeModeDisplayName(ThemeMode themeMode)
+        {
+            switch (themeMode)
+            {
+                case ThemeMode.Light:
+                    return "浅色模式";
+                case ThemeMode.Dark:
+                    return "深色模式";
+                case ThemeMode.System:
+                    return "跟随系统";
+                default:
+                    return themeMode.ToString();
+            }
+        }
+
+        public void ShowSettingsDialog(MainForm? mainForm = null)
+        {
+            this.mainForm = mainForm;
             VideoCutterSettings.Instance.LoadSettings();
             SettingsToGUI();
+            
+            // 保存当前主题设置
+            var originalTheme = VideoCutterSettings.Instance.ThemeMode;
+            
             this.ShowDialog();
+            
+            // 如果用户取消了设置，恢复原来的主题
+            if (this.DialogResult != DialogResult.OK)
+            {
+                ThemeManager.ApplyTheme(this, originalTheme);
+            }
+            else
+            {
+                // 如果用户确认了设置，通知主窗体刷新主题
+                mainForm?.RefreshTheme();
+            }
         }
 
 
@@ -71,6 +124,7 @@ namespace SimpleVideoCutter
             textBoxFFmpegPath.Text = settings.FFmpegPath;
             textBoxVideoFileExtensions.Text = String.Join(" ,", settings.VideoFilesExtensions);
             comboBoxPreviewSize.SelectedValue = settings.PreviewSize;
+            comboBoxThemeMode.SelectedValue = settings.ThemeMode;
 
             SetBackgroundOfFFmpegPath();
         }
@@ -84,6 +138,7 @@ namespace SimpleVideoCutter
             settings.OutputFilePattern = textBoxOutputFilePattern.Text;
             settings.FFmpegPath = textBoxFFmpegPath.Text;
             settings.PreviewSize = (PreviewSize)(Enum.Parse(typeof(PreviewSize), comboBoxPreviewSize.SelectedValue?.ToString() ?? "L"));
+            settings.ThemeMode = (ThemeMode)(Enum.Parse(typeof(ThemeMode), comboBoxThemeMode.SelectedValue?.ToString() ?? "System"));
             // TODO: parse VideoFilesExtensions
 
             settings.StoreSettings();

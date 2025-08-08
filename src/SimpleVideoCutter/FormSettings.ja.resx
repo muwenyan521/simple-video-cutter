@@ -138,7 +138,10 @@
 ディレクトリ内の前後の動画ファイルに移動します。</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>動画ファイルの拡張子。</value>
+    <value>サポートされているファイル形式</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>テーマ:</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>キャンセル</value>

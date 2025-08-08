@@ -141,7 +141,10 @@ der zu berücksichtigenden Videodateien. Wichtig bei
 zur vorherigen/nächsten Videodatei im Verzeichnis navigieren.</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Videodatei-Erweiterungen:</value>
+    <value>Unterstützte Dateiformate</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Design:</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Abbrechen</value>

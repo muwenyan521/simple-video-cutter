@@ -41,7 +41,7 @@ namespace SimpleVideoCutter
                     dialog.ShowDialog();
                     if (VideoCutterSettings.Instance.FFmpegPath == null || !File.Exists(VideoCutterSettings.Instance.FFmpegPath))
                     {
-                        formSettings.ShowSettingsDialog();
+                        formSettings.ShowSettingsDialog(this);
                     }
                 }
 
@@ -74,6 +74,9 @@ namespace SimpleVideoCutter
             formSettings = new FormSettings();
 
             InitializeComponent();
+
+            // 应用主题
+            ThemeManager.ApplyTheme(this, VideoCutterSettings.Instance.ThemeMode);
 
             toolStripButtonSelectionEnqueue.Text = GlobalStrings.MainForm_ButtonCut;
 
@@ -110,6 +113,9 @@ namespace SimpleVideoCutter
         private void MainForm_Load(object? sender, EventArgs e)
         {
             Core.Initialize();
+
+            // 重新应用主题以确保所有控件都被正确应用
+            ThemeManager.ApplyTheme(this, VideoCutterSettings.Instance.ThemeMode);
 
             // Full list of command line arguments: https://wiki.videolan.org/VLC_command-line_help
 
@@ -609,10 +615,16 @@ namespace SimpleVideoCutter
 
         private void StoreSettings()
         {
-            VideoCutterSettings.Instance.MainWindowLocation = new Rectangle(Location, Size);
-            VideoCutterSettings.Instance.MainWindowMaximized = WindowState == FormWindowState.Maximized;
+            VideoCutterSettings.Instance.MainWindowLocation = new Rectangle(this.Location, this.Size);
+            VideoCutterSettings.Instance.MainWindowMaximized = this.WindowState == FormWindowState.Maximized;
             ToolStripManager.SaveSettings(this, "SimpleVideoCutterMainForm");
             VideoCutterSettings.Instance.StoreSettings();
+        }
+
+        public void RefreshTheme()
+        {
+            // 重新应用主题
+            ThemeManager.ApplyTheme(this, VideoCutterSettings.Instance.ThemeMode);
         }
 
         private void EnqeueNewTask()
@@ -1073,7 +1085,7 @@ namespace SimpleVideoCutter
             }
             else if (e.ClickedItem == toolStripButtonFileSettings)
             {
-                formSettings.ShowSettingsDialog();
+                formSettings.ShowSettingsDialog(this);
                 ResizePreview();
             }
             else if (e.ClickedItem == toolStripButtonFileAbout)

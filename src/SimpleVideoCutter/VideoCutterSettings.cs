@@ -36,6 +36,9 @@ namespace SimpleVideoCutter
 
         public string? Language { get; set; }
         public PreviewSize PreviewSize { get; set; } = PreviewSize.L;
+        
+        // 深色模式设置
+        public ThemeMode ThemeMode { get; set; } = ThemeMode.System;
  
         [JsonIgnore]
         public string ConfigFolder { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
@@ -111,5 +114,12 @@ namespace SimpleVideoCutter
         L,
         XL,
 
+    }
+    
+    public enum ThemeMode
+    {
+        Light,
+        Dark,
+        System
     }
 }

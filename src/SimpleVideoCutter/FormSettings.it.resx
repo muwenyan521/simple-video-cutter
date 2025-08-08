@@ -139,7 +139,10 @@ Usato per la navigazione dei file nella cartella tramite i pulsanti
 file precedente/successivo.</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Estensioni file video:</value>
+    <value>Formati di file supportati</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Tema:</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Annulla</value>

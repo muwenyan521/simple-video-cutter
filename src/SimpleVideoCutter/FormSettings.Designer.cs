@@ -48,6 +48,8 @@
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             label6 = new System.Windows.Forms.Label();
             comboBoxPreviewSize = new System.Windows.Forms.ComboBox();
+            label7 = new System.Windows.Forms.Label();
+            comboBoxThemeMode = new System.Windows.Forms.ComboBox();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             buttonCancel = new System.Windows.Forms.Button();
             buttonOK = new System.Windows.Forms.Button();
@@ -147,7 +149,6 @@
             tableLayoutPanel1.Controls.Add(buttonDefaultDirectory, 2, 0);
             tableLayoutPanel1.Controls.Add(buttonOutputDirectory, 2, 1);
             tableLayoutPanel1.Controls.Add(textBoxFFmpegPath, 1, 4);
-            tableLayoutPanel1.Controls.Add(label2, 0, 1);
             tableLayoutPanel1.Controls.Add(label4, 0, 4);
             tableLayoutPanel1.Controls.Add(label3, 0, 3);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
@@ -155,6 +156,9 @@
             tableLayoutPanel1.Controls.Add(textBoxOutputFilePattern, 1, 3);
             tableLayoutPanel1.Controls.Add(label6, 0, 5);
             tableLayoutPanel1.Controls.Add(comboBoxPreviewSize, 1, 5);
+            tableLayoutPanel1.Controls.Add(label7, 0, 7);
+            tableLayoutPanel1.Controls.Add(comboBoxThemeMode, 1, 7);
+            tableLayoutPanel1.Controls.Add(label2, 0, 1);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label6
@@ -170,6 +174,20 @@
             comboBoxPreviewSize.FormattingEnabled = true;
             comboBoxPreviewSize.Name = "comboBoxPreviewSize";
             comboBoxPreviewSize.ValueMember = "Value";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(label7, "label7");
+            label7.Name = "label7";
+            // 
+            // comboBoxThemeMode
+            // 
+            resources.ApplyResources(comboBoxThemeMode, "comboBoxThemeMode");
+            comboBoxThemeMode.DisplayMember = "Title";
+            comboBoxThemeMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxThemeMode.FormattingEnabled = true;
+            comboBoxThemeMode.Name = "comboBoxThemeMode";
+            comboBoxThemeMode.ValueMember = "Value";
             // 
             // flowLayoutPanel1
             // 
@@ -236,5 +254,7 @@
         private System.Windows.Forms.TextBox textBoxOutputFilePattern;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBoxPreviewSize;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBoxThemeMode;
     }
 }

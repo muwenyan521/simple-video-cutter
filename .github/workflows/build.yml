@@ -1,0 +1,98 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+env:
+  DOTNET_VERSION: '7.0.x'
+  FFMPEG_VERSION: '6.1'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Setup FFmpeg
+      uses: FedericoCarboni/setup-ffmpeg@v4
+      with:
+        version: ${{ env.FFMPEG_VERSION }}
+        
+    - name: Restore dependencies
+      run: dotnet restore src/SimpleVideoCutter/SimpleVideoCutter.csproj
+      
+    - name: Build
+      run: dotnet build src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --no-build --verbosity normal
+      
+    - name: Publish
+      run: dotnet publish src/SimpleVideoCutter/SimpleVideoCutter.csproj --configuration Release --output ./publish --no-build --self-contained false
+      
+    - name: Copy FFmpeg
+      run: |
+        copy "C:\ffmpeg\bin\ffmpeg.exe" "publish\ffmpeg.exe"
+        copy "C:\ffmpeg\bin\ffprobe.exe" "publish\ffprobe.exe"
+        
+    - name: Create release package
+      run: |
+        7z a -tzip SimpleVideoCutter-${{ github.run_number }}.zip ./publish/*
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: SimpleVideoCutter-${{ github.run_number }}
+        path: SimpleVideoCutter-${{ github.run_number }}.zip
+        
+  release:
+    needs: build
+    runs-on: windows-latest
+    if: github.event_name == 'release'
+    
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: SimpleVideoCutter-${{ github.run_number }}
+        path: ./artifacts
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: ./artifacts/*.zip
+        tag_name: v${{ github.event.release.tag_name }}
+        name: Release ${{ github.event.release.tag_name }}
+        body: |
+          ## Simple Video Cutter ${{ github.event.release.tag_name }}
+          
+          ### Changes in this release:
+          ${{ github.event.release.body }}
+          
+          ### Downloads:
+          - Windows x64: SimpleVideoCutter-${{ github.run_number }}.zip
+          
+          ### Installation:
+          1. Download and extract the zip file
+          2. Run SimpleVideoCutter.exe
+          3. FFmpeg is included in the package
+          
+          ### Features:
+          - Video cutting and editing
+          - Multiple format support
+          - Dark mode theme
+          - Multi-language support
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

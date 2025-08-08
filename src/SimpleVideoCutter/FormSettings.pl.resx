@@ -137,7 +137,10 @@
 Ma znaczenie podczas nawigacji do poprzedniego/następnego pliku wideo w katalogu.</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Rozszerzenia plików wideo:</value>
+    <value>Obsługiwane formaty plików</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Motyw:</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Anuluj</value>

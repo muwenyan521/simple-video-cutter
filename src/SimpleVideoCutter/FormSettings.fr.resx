@@ -138,7 +138,10 @@ de fichiers vidéo à prendre en considération. Important lorsque
 la navigation vers le fichier vidéo précédent ou suivant dans le répertoire.</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Extensions des fichiers vidéo :</value>
+    <value>Formats de fichiers pris en charge</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Thème:</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Annuler</value>
