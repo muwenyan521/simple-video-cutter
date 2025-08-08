@@ -11,36 +11,36 @@ namespace SimpleVideoCutter
         public static class Colors
         {
             // 浅色主题颜色
-            public static class Light
+            public static dynamic Light => new 
             {
-                public static Color Background = Color.FromArgb(240, 240, 240);
-                public static Color Foreground = Color.FromArgb(30, 30, 30);
-                public static Color ControlBackground = Color.White;
-                public static Color ControlBorder = Color.FromArgb(200, 200, 200);
-                public static Color ToolStripBackground = Color.FromArgb(245, 245, 245);
-                public static Color MenuBackground = Color.White;
-                public static Color MenuForeground = Color.FromArgb(30, 30, 30);
-                public static Color SelectionBackground = Color.FromArgb(0, 120, 215);
-                public static Color SelectionForeground = Color.White;
-                public static Color TimelineBackground = Color.FromArgb(250, 250, 250);
-                public static Color TimelineGrid = Color.FromArgb(220, 220, 220);
-            }
+                Background = Color.FromArgb(240, 240, 240),
+                Foreground = Color.FromArgb(30, 30, 30),
+                ControlBackground = Color.White,
+                ControlBorder = Color.FromArgb(200, 200, 200),
+                ToolStripBackground = Color.FromArgb(245, 245, 245),
+                MenuBackground = Color.White,
+                MenuForeground = Color.FromArgb(30, 30, 30),
+                SelectionBackground = Color.FromArgb(0, 120, 215),
+                SelectionForeground = Color.White,
+                TimelineBackground = Color.FromArgb(250, 250, 250),
+                TimelineGrid = Color.FromArgb(220, 220, 220)
+            };
 
             // 深色主题颜色
-            public static class Dark
+            public static dynamic Dark => new 
             {
-                public static Color Background = Color.FromArgb(32, 32, 32);
-                public static Color Foreground = Color.FromArgb(240, 240, 240);
-                public static Color ControlBackground = Color.FromArgb(45, 45, 45);
-                public static Color ControlBorder = Color.FromArgb(60, 60, 60);
-                public static Color ToolStripBackground = Color.FromArgb(40, 40, 40);
-                public static Color MenuBackground = Color.FromArgb(45, 45, 45);
-                public static Color MenuForeground = Color.FromArgb(240, 240, 240);
-                public static Color SelectionBackground = Color.FromArgb(0, 120, 215);
-                public static Color SelectionForeground = Color.White;
-                public static Color TimelineBackground = Color.FromArgb(35, 35, 35);
-                public static Color TimelineGrid = Color.FromArgb(70, 70, 70);
-            }
+                Background = Color.FromArgb(32, 32, 32),
+                Foreground = Color.FromArgb(240, 240, 240),
+                ControlBackground = Color.FromArgb(45, 45, 45),
+                ControlBorder = Color.FromArgb(60, 60, 60),
+                ToolStripBackground = Color.FromArgb(40, 40, 40),
+                MenuBackground = Color.FromArgb(45, 45, 45),
+                MenuForeground = Color.FromArgb(240, 240, 240),
+                SelectionBackground = Color.FromArgb(0, 120, 215),
+                SelectionForeground = Color.White,
+                TimelineBackground = Color.FromArgb(35, 35, 35),
+                TimelineGrid = Color.FromArgb(70, 70, 70)
+            };
         }
 
         public static void ApplyTheme(Form form, ThemeMode themeMode)
@@ -64,8 +64,8 @@ namespace SimpleVideoCutter
                 case ThemeMode.Dark:
                     return true;
                 case ThemeMode.System:
+                    return IsSystemDarkMode();
                 default:
-                    // 检测系统主题
                     return IsSystemDarkMode();
             }
         }
@@ -119,22 +119,32 @@ namespace SimpleVideoCutter
         private static void ApplySingleControlTheme(Control control, dynamic colors)
         {
             // 根据控件类型应用不同的主题
+            // 注意：顺序很重要，派生类必须在基类之前匹配
             switch (control)
             {
-                case ToolStrip toolStrip:
-                    ApplyToolStripTheme(toolStrip, colors);
+                case DataGridView dataGridView:
+                    ApplyDataGridViewTheme(dataGridView, colors);
+                    break;
+                case ListView listView:
+                    ApplyListViewTheme(listView, colors);
+                    break;
+                case ListBox listBox:
+                    ApplyListBoxTheme(listBox, colors);
                     break;
                 case MenuStrip menuStrip:
                     ApplyMenuStripTheme(menuStrip, colors);
                     break;
+                case ToolStrip toolStrip:
+                    ApplyToolStripTheme(toolStrip, colors);
+                    break;
                 case StatusStrip statusStrip:
                     ApplyStatusStripTheme(statusStrip, colors);
                     break;
-                case Panel panel:
-                    ApplyPanelTheme(panel, colors);
-                    break;
                 case GroupBox groupBox:
                     ApplyGroupBoxTheme(groupBox, colors);
+                    break;
+                case Panel panel:
+                    ApplyPanelTheme(panel, colors);
                     break;
                 case TextBox textBox:
                     ApplyTextBoxTheme(textBox, colors);
@@ -142,26 +152,17 @@ namespace SimpleVideoCutter
                 case ComboBox comboBox:
                     ApplyComboBoxTheme(comboBox, colors);
                     break;
-                case Button button:
-                    ApplyButtonTheme(button, colors);
-                    break;
                 case CheckBox checkBox:
                     ApplyCheckBoxTheme(checkBox, colors);
                     break;
                 case RadioButton radioButton:
                     ApplyRadioButtonTheme(radioButton, colors);
                     break;
+                case Button button:
+                    ApplyButtonTheme(button, colors);
+                    break;
                 case Label label:
                     ApplyLabelTheme(label, colors);
-                    break;
-                case ListBox listBox:
-                    ApplyListBoxTheme(listBox, colors);
-                    break;
-                case ListView listView:
-                    ApplyListViewTheme(listView, colors);
-                    break;
-                case DataGridView dataGridView:
-                    ApplyDataGridViewTheme(dataGridView, colors);
                     break;
                 default:
                     // 默认主题应用
@@ -322,4 +323,4 @@ namespace SimpleVideoCutter
             }
         }
     }
-} 
+}
