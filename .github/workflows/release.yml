@@ -22,7 +22,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Setup FFmpeg
-      uses: FedericoCarboni/setup-ffmpeg@v4
+      uses: FedericoCarboni/setup-ffmpeg@v3
       with:
         version: ${{ env.FFMPEG_VERSION }}
         
